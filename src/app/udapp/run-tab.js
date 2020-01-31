@@ -56,7 +56,7 @@ export class RunTab extends LibraryPlugin {
       },
       getValue: (cb) => {
         try {
-          const number = document.querySelector('#value').value
+          const number = document.querySelector('#deployAndRunTransferValue').value
           const select = document.getElementById('unit')
           const index = select.selectedIndex
           const selectedUnit = select.querySelectorAll('option')[index].dataset.unit
