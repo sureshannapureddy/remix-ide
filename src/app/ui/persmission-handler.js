@@ -3,6 +3,7 @@ const yo = require('yo-yo')
 const csjs = require('csjs-inject')
 const addTooltip = require('./tooltip')
 const modalDialog = require('./modaldialog')
+const globalRegistry = require('../../global/registry')
 
 const css = csjs`
 .permission h4 {
@@ -140,20 +141,26 @@ export class PermissionHandler {
         : delete this.permissions[to.name][from.name]
     }
     const rememberSwitch = remember
-      ? yo`<input type="checkbox" onchange="${switchMode}" checkbox class="custom-control-input" id="remember">`
-      : yo`<input type="checkbox" onchange="${switchMode}" class="custom-control-input" id="remember">`
+      ? yo`<input type="checkbox" onchange="${switchMode}" checkbox class="form-check-input" id="remember">`
+      : yo`<input type="checkbox" onchange="${switchMode}" class="form-check-input" id="remember">`
     const message = remember
       ? `"${fromName}" has changed and would like to access "${toName}"`
       : `"${fromName}" would like to access "${toName}"`
 
-    return yo`
-    <section class="${css.permission}">
-      <article class="${css.images}">
+    const pluginsImages = yo`
+      <article id="permissionModalImages" class="${css.images}">
         <img src="${from.icon}" />
-        <i class="fas fa-arrow-right"></i>
+        <i class="text-warning fas fa-arrow-right"></i>
         <img src="${to.icon}" />
       </article>
-      
+
+    `
+
+    globalRegistry.get('themeModule').api.fixInvert(pluginsImages)
+
+    return yo`
+    <section class="${css.permission}">
+      ${pluginsImages}
       <article>
         <h4>${message} :</h4>
         <h6>${fromName}</h6>
@@ -163,9 +170,9 @@ export class PermissionHandler {
       </article>
 
       <article class="${css.remember}">
-        <div class="custom-control custom-checkbox">
+        <div class="form-check">
           ${rememberSwitch}
-          <label class="custom-control-label" for="remember">Remember this choice</label>
+          <label class="form-check-label" for="remember">Remember this choice</label>
         </div>
         <button class="btn btn-sm" onclick="${_ => this.clear()}">Reset all Permissions</button>
       </article>
@@ -173,4 +180,17 @@ export class PermissionHandler {
     </section>
     `
   }
+
+  listenOnThemeChange (images) {
+    // update invert for Plugin icons
+    if (!globalRegistry.get('themeModule')) return
+    globalRegistry.get('themeModule').api.events.on('themeChanged', (theme) => {
+      if (fromImg && toImg) {
+        globalRegistry.get('themeModule').api.fixInvert(images)
+      }
+    })
+  }
 }
+
+
+
