@@ -185,12 +185,7 @@ export class PermissionHandler {
     // update invert for Plugin icons
     if (!globalRegistry.get('themeModule')) return
     globalRegistry.get('themeModule').api.events.on('themeChanged', (theme) => {
-      if (fromImg && toImg) {
-        globalRegistry.get('themeModule').api.fixInvert(images)
-      }
+      globalRegistry.get('themeModule').api.fixInvert(images)
     })
   }
 }
-
-
-

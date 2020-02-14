@@ -84,8 +84,8 @@ export class TabProxy {
       }
     })
   }
-  updateImgStyles() {
-    const images = this._view.filetabs.getElementsByClassName("image py-1")
+  updateImgStyles () {
+    const images = this._view.filetabs.getElementsByClassName('image')
     if (images.length !== 0) {
       for (let element of images) {
         globalRegistry.get('themeModule').api.fixInvert(element)
