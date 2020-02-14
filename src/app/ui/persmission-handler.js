@@ -155,9 +155,7 @@ export class PermissionHandler {
         <i class="fas fa-arrow-right"></i>
         ${imgTo}
       </article>
-
-    `
-    
+    `    
     globalRegistry.get('themeModule').api.fixInvert(imgFrom)
     globalRegistry.get('themeModule').api.fixInvert(imgTo)
 
