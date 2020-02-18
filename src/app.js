@@ -37,8 +37,6 @@ const FilePanel = require('./app/panels/file-panel')
 const Editor = require('./app/editor/editor')
 const Terminal = require('./app/panels/terminal')
 const ContextualListener = require('./app/editor/contextualListener')
-
-
 import { RunTab, makeUdapp } from './app/udapp'
 
 import PanelsResize from './lib/panels-resize'
@@ -245,7 +243,7 @@ Please make a backup of your contracts and start using http://remix.ethereum.org
   const offsetToLineColumnConverter = new OffsetToLineColumnConverter()
   registry.put({api: offsetToLineColumnConverter, name: 'offsettolinecolumnconverter'})
 
-  //-------------------Terminal----------------------------------------
+  // -------------------Terminal----------------------------------------
 
   const terminal = new Terminal(
     { appManager, blockchain },
